@@ -45,7 +45,6 @@ export default class BorisAutoComplete extends React.Component {
 
     const keys = Object.keys( options );
     const sel = keys.filter(( key ) => options[ key ].title === selected );
-
     if ( sel.length ) {
       this.props.navigateTo( this.props.section, sel[ 0 ] );
     }

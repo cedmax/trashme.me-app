@@ -6,6 +6,7 @@ import ClipBoard from 'clipboard';
 import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 
 injectTapEventPlugin();
+new ClipBoard( '.copy-btn' );
 
 const data = JSON.parse( document.getElementById( 'data' ).innerHTML );
 
@@ -28,9 +29,6 @@ class Main extends React.Component {
         section={ this.props.params.section }
         selected={ this.props.params.selected }
         format={ this.props.params.format }
-        onCopyReady={ function( selector ) {
-          new ClipBoard( selector );
-        } }
         dropDownHeight={ getAvailableDropDownSpace() }
       />
     );

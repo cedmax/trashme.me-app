@@ -16,7 +16,7 @@ export default class Category extends React.Component {
       videos
     } = data.categories[ section ];
     const currentVideo = selected ? videos[ selected ] : null;
-
+    
     return (
       <div
         style={ Object.assign({}, style.pages.category.container, {

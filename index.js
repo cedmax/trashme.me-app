@@ -59,8 +59,7 @@ jspm.import( 'js/app' ).then( function( App ) {
           section,
           selected,
           format,
-          navigateTo: function() {},
-          onCopyReady: function() {}
+          navigateTo: function() {}
         }))
       });
 

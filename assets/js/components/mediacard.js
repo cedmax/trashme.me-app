@@ -43,7 +43,9 @@ export default class MediaCard extends React.Component {
 
   render() {
     const {
-      currentVideo
+      currentVideo,
+      disableButtons,
+      style: mediaCardStyle
     } = this.props;
 
     let {
@@ -56,71 +58,77 @@ export default class MediaCard extends React.Component {
       return ( <div /> );
     }
 
-    let alternateButton;
+    let cardTitle;
     let media = ( <Video videoUrl={url} /> );
 
-    const isGifEnabled = gif;
-    const isGifVisible = this.state.gif;
+    if (!disableButtons) {
+      let alternateButton;
+      const isGifEnabled = gif;
+      const isGifVisible = this.state.gif;
 
-    if ( isGifEnabled && !isGifVisible ) {
-      alternateButton = (
-        <Button
-          onClick={ this.toggleGif }
-          tooltip='Show the GIF instead'
-          icon={ <GifIcon /> }
-        />
+      if ( isGifEnabled && !isGifVisible ) {
+        alternateButton = (
+          <Button
+            onClick={ this.toggleGif }
+            tooltip='Show the GIF instead'
+            icon={ <GifIcon /> }
+          />
+        );
+      } else if ( isGifVisible ) {
+        url = gif;
+        alternateButton = (
+          <Button
+            onClick={this.toggleGif }
+            tooltip='Show the video instead'
+            icon={ <VideoIcon /> }
+          />
+        );
+        media = (
+          <img
+            title={ title }
+            src={ url }
+          />
+        );
+      }
+
+      let subtitle = (
+        <div
+          style={ style.mediaCard.subtitle }
+        >
+          {alternateButton}
+
+          <CopyButton
+            toBeCopied={ url }
+          />
+          <Link
+            url={ url }
+          />
+        </div>
       );
-    } else if ( isGifVisible ) {
-      url = gif;
-      alternateButton = (
-        <Button
-          onClick={this.toggleGif }
-          tooltip='Show the video instead'
-          icon={ <VideoIcon /> }
-        />
-      );
-      media = (
-        <img
-          title={ title }
-          src={ url }
-        />
+
+      cardTitle = (
+        <CardTitle
+            subtitle={ subtitle }
+          />
       );
     }
-
-    let subtitle = (
-      <div
-        style={ style.mediaCard.subtitle }
-      >
-        {alternateButton}
-
-        <CopyButton
-          toBeCopied={ url }
-          onCopyReady={ this.props.onCopyReady }
-        />
-        <Link
-          url={ url }
-        />
-      </div>
-    );
-
     return (
       <Card
-        style={ style.mediaCard.container }
+        style={ style.mediaCard[mediaCardStyle || 'container'] }
       >
         <CardMedia>
           { media }
         </CardMedia>
-        <CardTitle
-          subtitle={ subtitle }
-        />
+        { cardTitle }
       </Card>
     );
   }
 }
 
 MediaCard.propTypes = {
+  style: React.PropTypes.string,
+  disableButtons: React.PropTypes.bool,
   title: React.PropTypes.string,
   currentVideo: props.video,
-  selected: React.PropTypes.string,
-  onCopyReady: React.PropTypes.func.isRequired
+  selected: React.PropTypes.string
 };

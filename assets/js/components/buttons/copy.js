@@ -16,13 +16,8 @@ export default class CopyButton extends React.Component {
       </IconButton>
     );
   }
-
-  componentDidMount() {
-    this.props.onCopyReady( '.copy-btn' );
-  }
 }
 
 CopyButton.propTypes = {
-  toBeCopied: React.PropTypes.string.isRequired,
-  onCopyReady: React.PropTypes.func.isRequired
+  toBeCopied: React.PropTypes.string.isRequired
 };

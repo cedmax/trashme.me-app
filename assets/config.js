@@ -1,5 +1,4 @@
 System.config({
-  baseURL: "/",
   defaultJSExtensions: true,
   transpiler: "babel",
   babelOptions: {
@@ -22,6 +21,7 @@ System.config({
     "fbjs": "npm:fbjs@0.2.1",
     "inline-style-prefix-all": "npm:inline-style-prefix-all@1.0.5",
     "jsx": "github:floatdrop/plugin-jsx@1.2.1",
+    "lodash": "npm:lodash@4.16.4",
     "material-ui": "npm:material-ui@0.15.0-alpha.2",
     "react": "npm:react@0.14.7",
     "react-dom": "npm:react-dom@0.14.7",

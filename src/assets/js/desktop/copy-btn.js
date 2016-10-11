@@ -5,9 +5,9 @@ export default (props)=>{
   if (props.hide){
     style = {
       visibility: 'hidden'
-    }
+    };
   }
   return <div style={style}><button className={props.service} data-clipboard-text={props.value}>
     copy from {props.service}
-  </button></div>
-}
+  </button></div>;
+};

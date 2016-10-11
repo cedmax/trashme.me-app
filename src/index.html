@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <style>
+      body{
+        font-family: 'Roboto', sans-serif;
+        margin:0;padding:0
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+  </body>
+  
+  <!-- build:js ./main.js -->
+    <script src="assets/system.js"></script>
+    <script>
+      System.config({
+        baseURL: 'assets'
+      });
+    </script>
+    <script src="assets/config.js"></script>
+    <script>
+      System.import('js/main');
+    </script>
+  <!-- endbuild -->
+</html>

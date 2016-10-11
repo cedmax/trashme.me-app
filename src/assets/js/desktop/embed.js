@@ -39,4 +39,4 @@ export default (props)=>{
       ></iframe>
     </div>
   );
-}
+};

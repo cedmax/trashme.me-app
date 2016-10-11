@@ -4,51 +4,41 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "desktop-start": "electron desktop.js",
-    "postinstall": "jspm install",
-    "sort-json": "sort-json",
-    "fix": "scripts/sort-json.sh && jscs -x ./*.js assets/js",
-    "validate": "jsonlint data/*.json --quiet && eslint ./*.js assets/js",
-    "test": "npm run fix && npm run validate",
-    "test-all": "npm test && node scripts/test-content",
-    "bundle": "jspm bundle-sfx -m js/main assets/bundle.js",
-    "bundle-desktop": "jspm bundle-sfx -m js/desktop assets/bundle-desktop.js"
+    "clean": "rm ./index.* ./Icon* ./main.* & rm -rf ./dist/TrashMeme-darwin-x64",
+    "prepare-assets": "cp ./src/index.js . & cp ./src/Icon* . & usemin src/index.html -d ./ > ./index.html --rmlr true & npm run bundle",
+    "bundle": "jspm bundle-sfx -m js/main ./main.js",
+    "package": "electron-packager . TrashMeme --platform=darwin --icon=./Icon.icns --out=./dist",
+    "start": "electron src/index.js",
+    "build": "npm run prepare-assets && npm run package && appdmg ./app.json ./dist/TrashMeme.dmg && npm run clean"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "cheerio": "^0.22.0",
     "electron-prebuilt": "^1.4.3",
-    "express": "4.13.3",
-    "express-autoprefixer": "4.0.3",
     "get-youtube-id": "^1.0.0",
-    "hogan-express": "0.5.2",
-    "hotload": "0.0.5",
     "jspm": "0.16.31",
     "lodash": "^4.11.1",
-    "marked": "0.3.5",
     "menubar": "^5.1.0",
     "open": "0.0.5",
     "postcss": "^4.1.16",
     "react": "0.14.7",
     "react-dom": "0.14.7",
     "request": "^2.75.0",
-    "requiredir": "^1.0.7"
+    "usemin-cli": "^0.1.0"
   },
   "devDependencies": {
+    "appdmg": "^0.4.5",
     "autoprefixer": "^5.2.0",
     "babel-eslint": "5.0.0",
-    "colors": "^1.1.2",
+    "electron-packager": "^8.1.0",
     "eslint": "2.2.0",
     "eslint-plugin-react": "2.7.1",
-    "jscs": "^3.0.3",
-    "jsonlint": "1.6.2",
-    "request": "^2.70.0",
-    "sort-json": "^1.2.0"
+    "jscs": "^3.0.3"
   },
   "jspm": {
     "directories": {
-      "baseURL": "assets"
+      "baseURL": "src/assets"
     },
     "dependencies": {
       "clipboard": "npm:clipboard@1.5.9",
@@ -57,9 +47,7 @@
       "lodash": "npm:lodash@^4.16.4",
       "material-ui": "npm:material-ui@0.15.0-alpha.2",
       "react": "npm:react@0.14.7",
-      "react-router": "npm:react-router@2.0.1",
-      "react-tap-event-plugin": "github:zilverline/react-tap-event-plugin@0.2.2",
-      "react-toolbox": "github:react-toolbox/react-toolbox@0.14.2"
+      "react-tap-event-plugin": "github:zilverline/react-tap-event-plugin@0.2.2"
     },
     "devDependencies": {
       "babel": "npm:babel-core@5.8.24",

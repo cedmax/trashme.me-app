@@ -43,7 +43,3 @@ mb.on('after-create-window', ()=>{
     }
   });
 });
-
-// mb.on('after-hide', ()=>{
-//   mb.window.reload();
-// });

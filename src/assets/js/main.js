@@ -6,17 +6,25 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 
 injectTapEventPlugin();
 
-const data = window.data;
-
 function getAvailableDropDownSpace() {
   return document.body.clientHeight - 200;
 }
 
-ReactDOM.render(
-  <DesktopApp 
-    data={data}
-    dropDownHeight={ getAvailableDropDownSpace() } />,
-  document.getElementById('app')
-);
-
 new ClipBoard( '.trashme' );
+
+function startApp(){
+  const data = window.data;
+
+  if (data){
+    ReactDOM.render(
+      <DesktopApp 
+        data={data}
+        dropDownHeight={ getAvailableDropDownSpace() } />,
+      document.getElementById('app')
+    );
+  } else {
+    setTimeout(startApp, 100);
+  } 
+}
+
+startApp();

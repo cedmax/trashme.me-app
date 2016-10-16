@@ -3,13 +3,14 @@ import MediaCard from 'js/components/mediacard';
 import AutoComplete from 'js/components/autocomplete';
 import Container from 'js/components/container';
 import AppBar from 'material-ui/lib/app-bar';
+import IconButton from 'material-ui/lib/icon-button';
+import Icon from 'material-ui/lib/svg-icons/navigation/close';
 
 function forceCopy(){
   setTimeout(()=>{
     const event = document.createEvent('HTMLEvents');
     event.initEvent('click', true, true);
     const target = document.querySelector('.trashme');
-    console.log('date');
     target.dispatchEvent(event);
   },500);
 }
@@ -44,6 +45,13 @@ export default class DestkopApp extends React.Component {
         <AppBar
           showMenuIconButton={false}
           title="TrashMeme"
+          iconElementRight={
+            <IconButton 
+              tooltip="quit"
+              onClick={this.props.quit}>
+              <Icon/>
+            </IconButton>
+          }
         />
       <Container>
         <AutoComplete

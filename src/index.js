@@ -1,14 +1,25 @@
-var menubar = require('menubar');
-var _ = require('lodash');
-var open = require('open');
-var request = require('request');
-var cheerio = require('cheerio');
-var electron = require('electron');
+const menubar = require('menubar');
+const _ = require('lodash');
+const open = require('open');
+const request = require('request');
+const cheerio = require('cheerio');
+const electron = require('electron');
+const Settings = require('electron-settings');
 
-var data;
+var data, settings;
 var mb = menubar({
   dir: __dirname,
   preloadWindow: true
+});
+
+Settings.defaults({
+  appSettings: {
+    copyYoutubeUrl: false
+  }
+});
+
+Settings.get('appSettings').then((val) => {
+  settings = val;
 });
 
 function arrangeData(data) {
@@ -30,7 +41,7 @@ mb.on('ready', function ready () {
         event.preventDefault();
         open(url);
       });
-      mb.window.webContents.executeJavaScript(`window.data = ${arrangeData(data)};`);
+      mb.window.webContents.executeJavaScript(`window.data = ${arrangeData(data)};window.settings = ${JSON.stringify(settings)};`);
     }
   });  
 }); 
@@ -43,9 +54,17 @@ mb.on('after-create-window', ()=>{
     html.executeJavaScript('document.getElementById("search") && document.getElementById("search").focus();');
   });
 
+  // html.openDevTools({
+  //   mode:'detach'
+  // });
+
   html.on('dom-ready', () => {
     if (data) {
-      html.executeJavaScript(`window.data = ${arrangeData(data)};`);
+      html.executeJavaScript(`window.data = ${arrangeData(data)};window.settings = ${JSON.stringify(settings)};`);
     }
   });
+});
+
+electron.ipcMain.on('save-settings', (event, appSettings) => {
+  Settings.set('appSettings', appSettings);
 });

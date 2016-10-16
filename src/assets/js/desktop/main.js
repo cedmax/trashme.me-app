@@ -2,9 +2,8 @@ import React from 'react';
 import MediaCard from 'js/components/mediacard';
 import AutoComplete from 'js/components/autocomplete';
 import Container from 'js/components/container';
-import AppBar from 'material-ui/lib/app-bar';
-import IconButton from 'material-ui/lib/icon-button';
-import Icon from 'material-ui/lib/svg-icons/navigation/close';
+import Nav from 'js/components/nav';
+import { getSetting } from 'js/actions';
 
 function forceCopy(){
   setTimeout(()=>{
@@ -12,7 +11,7 @@ function forceCopy(){
     event.initEvent('click', true, true);
     const target = document.querySelector('.trashme');
     target.dispatchEvent(event);
-  },500);
+  }, 500);
 }
 
 export default class DestkopApp extends React.Component {
@@ -31,7 +30,7 @@ export default class DestkopApp extends React.Component {
 
     let btn;
     if (currentVideo) {
-      const urlToCopy = `https://trashme.me/${currentVideo.category}/${this.state.key}`;
+      const urlToCopy = getSetting('copyYoutubeUrl')?currentVideo.url:`https://trashme.me/${currentVideo.category}/${this.state.key}`;
       btn = (
         <a
           className="trashme"
@@ -42,17 +41,7 @@ export default class DestkopApp extends React.Component {
     }
 
     return <div>
-        <AppBar
-          showMenuIconButton={false}
-          title="TrashMeme"
-          iconElementRight={
-            <IconButton 
-              tooltip="quit"
-              onClick={this.props.quit}>
-              <Icon/>
-            </IconButton>
-          }
-        />
+      <Nav />
       <Container>
         <AutoComplete
           { ...this.props }

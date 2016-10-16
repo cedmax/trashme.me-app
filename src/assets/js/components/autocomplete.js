@@ -60,7 +60,6 @@ export default class BorisAutoComplete extends React.Component {
   render() {
     const {
       options,
-      section,
       value
     } = this.props;
 
@@ -82,13 +81,13 @@ export default class BorisAutoComplete extends React.Component {
         <AutoComplete
           onFocus={ this.onFocus.bind( this ) }
           menuProps={ menuProps }
-          id={ `search-${section}` }
+          id="search"
           searchText={ this.state.searchText }
           fullWidth={ true }
           hintText={ placeHolder }
           dataSource={ Object.keys( options ).map( item => options[ item ].title ) }
           filter={ AutoComplete.caseInsensitiveFilter }
-          openOnFocus={ true }
+          openOnFocus={ false }
           onUpdateInput={ this.handleUpdateInput.bind( this ) }
           onNewRequest={ this.handleSelect.bind( this ) }
         />

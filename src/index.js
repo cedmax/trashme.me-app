@@ -3,6 +3,7 @@ var _ = require('lodash');
 var open = require('open');
 var request = require('request');
 var cheerio = require('cheerio');
+var electron = require('electron');
 
 var data;
 var mb = menubar({
@@ -36,6 +37,11 @@ mb.on('ready', function ready () {
 
 mb.on('after-create-window', ()=>{
   var html = mb.window.webContents;
+  electron.globalShortcut.register('cmd+alt+space', function(){
+    mb.window.isVisible() ? mb.window.hide() : mb.window.show();
+    mb.positioner.move('trayCenter', mb.tray.getBounds() );
+    html.executeJavaScript('document.getElementById("search") && document.getElementById("search").focus();');
+  });
 
   html.on('dom-ready', () => {
     if (data) {

@@ -13,3 +13,7 @@ export function saveSettings(key, value) {
 export function getSetting(key) {
   return window.settings[key];
 }
+
+export function saveShortcut(shortcut) {
+  window.electron.ipcRenderer.send('new-shortcut', shortcut);
+}

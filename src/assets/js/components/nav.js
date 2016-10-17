@@ -2,6 +2,8 @@ import React from 'react';
 import AppBar from 'material-ui/lib/app-bar';
 import LeftNav from 'material-ui/lib/left-nav';
 import Settings from 'js/components/settings';
+import IconButton from 'material-ui/lib/icon-button';
+import Icon from 'material-ui/lib/svg-icons/navigation/close';
 
 export default class Nav extends React.Component {
   constructor( props ) {
@@ -21,7 +23,7 @@ export default class Nav extends React.Component {
     let menu;
     if ( this.state.openMenu ) {
       menu = (
-        <Settings {...this.props} closeMenu={this.handleToggleMenu}/>
+        <Settings {...this.props} />
       );
     }
 
@@ -35,7 +37,18 @@ export default class Nav extends React.Component {
         docked={ false }
         onRequestChange={ openMenu => this.setState({ openMenu }) }
         open={ this.state.openMenu }
+        containerStyle={{top:'10px'}}
       >
+      <AppBar
+        iconElementLeft={
+          <IconButton
+            onClick={this.handleToggleMenu}
+          >
+            <Icon />
+          </IconButton>
+        }
+        title="TrashMeme"
+      />
       { menu }
       </LeftNav>
     </div>;

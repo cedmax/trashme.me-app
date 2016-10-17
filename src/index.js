@@ -9,7 +9,9 @@ const Settings = require('electron-settings');
 var data, settings;
 var mb = menubar({
   dir: __dirname,
-  preloadWindow: true
+  preloadWindow: true,
+  height: 410,
+  transparent: true
 });
 
 Settings.defaults({

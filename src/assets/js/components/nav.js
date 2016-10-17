@@ -1,8 +1,8 @@
 import React from 'react';
-import AppBar from 'material-ui/lib/app-bar';
-import LeftNav from 'material-ui/lib/left-nav';
-import IconButton from 'material-ui/lib/icon-button';
-import Icon from 'material-ui/lib/svg-icons/navigation/close';
+import AppBar from 'material-ui/AppBar';
+import Drawer from 'material-ui/Drawer';
+import IconButton from 'material-ui/IconButton';
+import Icon from 'material-ui/svg-icons/navigation/close';
 
 export default class Nav extends React.Component {
   constructor( props ) {
@@ -29,7 +29,7 @@ export default class Nav extends React.Component {
         onLeftIconButtonTouchTap={this.handleToggleMenu}
         title="TrashMeme"
       />
-      <LeftNav
+      <Drawer
         width={ document.body.clientWidth }
         docked={ false }
         onRequestChange={ openMenu => this.setState({ openMenu }) }
@@ -47,7 +47,7 @@ export default class Nav extends React.Component {
         title="TrashMeme"
       />
       { menu }
-      </LeftNav>
+      </Drawer>
     </div>;
   } 
 }

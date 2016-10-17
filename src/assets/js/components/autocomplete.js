@@ -1,5 +1,5 @@
 import React from 'react';
-import AutoComplete from 'material-ui/lib/auto-complete';
+import AutoComplete from 'material-ui/AutoComplete';
 import props from 'js/props';
 import style from 'js/style';
 
@@ -31,13 +31,6 @@ export default class BorisAutoComplete extends React.Component {
     this.navigateToVideo( text );
   }
 
-  handleChangeSection( section ) {
-    this.setState({
-      section,
-      searchText: ''
-    });
-  }
-
   navigateToVideo( selected ) {
     const {
       options
@@ -48,13 +41,6 @@ export default class BorisAutoComplete extends React.Component {
     if ( sel.length ) {
       this.props.navigateTo( this.props.section, sel[ 0 ] );
     }
-  }
-
-  shouldComponentUpdate( nextProp, nextState ) {
-    if ( nextProp.section !== nextState.section ) {
-      this.handleChangeSection( nextProp.section );
-    }
-    return true;
   }
 
   render() {
@@ -83,17 +69,16 @@ export default class BorisAutoComplete extends React.Component {
         style={ style.autocomplete.container }
       >
         <AutoComplete
-          onFocus={ this.onFocus.bind( this ) }
+          dataSource={ Object.keys( options ).map( item => options[ item ].title ) }
           menuProps={ menuProps }
+          openOnFocus={ false }
+          hintText={ placeHolder }
+          onUpdateInput={ this.handleUpdateInput.bind( this ) }
+          onClick={ this.onFocus.bind(this) }
+          onNewRequest={ this.handleSelect.bind( this ) }
+          filter={ AutoComplete.caseInsensitiveFilter }
           id="search"
           searchText={ this.state.searchText }
-          fullWidth={ true }
-          hintText={ placeHolder }
-          dataSource={ Object.keys( options ).map( item => options[ item ].title ) }
-          filter={ AutoComplete.caseInsensitiveFilter }
-          openOnFocus={ false }
-          onUpdateInput={ this.handleUpdateInput.bind( this ) }
-          onNewRequest={ this.handleSelect.bind( this ) }
         />
       </div>
     );

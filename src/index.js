@@ -9,7 +9,8 @@ const Settings = require('electron-settings');
 var data;
 var settings = {
   copyYoutubeUrl: false,
-  quick: true
+  quick: true, 
+  shortcut: ['Super', 'Alt', 'Space']
 };
 
 var mb = menubar({
@@ -23,8 +24,17 @@ Settings.defaults({
   appSettings: settings
 });
 
+
+function setShortcut(shortcut) {
+  electron.globalShortcut.register(shortcut.join('+'), function(){
+    mb.window.isVisible() ? mb.window.hide() : mb.window.show();
+    mb.positioner.move('trayCenter', mb.tray.getBounds() );
+  });
+}
+
 Settings.get('appSettings').then((val) => {
   settings = _.extend(settings, val);
+  setShortcut(settings.shortcut);
 });
 
 function arrangeData(data) {
@@ -53,11 +63,8 @@ mb.on('ready', function ready () {
 
 mb.on('after-create-window', ()=>{
   var html = mb.window.webContents;
-  electron.globalShortcut.register('cmd+alt+space', function(){
-    mb.window.isVisible() ? mb.window.hide() : mb.window.show();
-    mb.positioner.move('trayCenter', mb.tray.getBounds() );
-    html.executeJavaScript('document.getElementById("search") && document.getElementById("search").focus();');
-  });
+  
+  html.executeJavaScript('document.getElementById("search") && document.getElementById("search").focus();');
 
   // html.openDevTools({
   //   mode:'detach'
@@ -72,4 +79,9 @@ mb.on('after-create-window', ()=>{
 
 electron.ipcMain.on('save-settings', (event, appSettings) => {
   Settings.set('appSettings', appSettings);
+});
+
+electron.ipcMain.on('new-shortcut', (event, shortcut) => {
+  electron.globalShortcut.unregisterAll();
+  setShortcut(shortcut);
 });

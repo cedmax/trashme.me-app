@@ -6,6 +6,8 @@ import Nav from 'js/components/nav';
 import filterObject from 'filter-object';
 import { getSetting } from 'js/actions';
 import Settings from 'js/components/settings';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 
 function forceCopy(){
   setTimeout(()=>{
@@ -30,6 +32,11 @@ export default class DestkopApp extends React.Component {
     };
     this.onSelect = this.onSelect.bind(this);
   }
+
+  getChildContext() {
+    return {muiTheme: getMuiTheme(baseTheme)};
+  }
+
 
   render() {
     const currentVideo = this.state.key ? this.state.selected : null;
@@ -77,3 +84,7 @@ export default class DestkopApp extends React.Component {
     });
   }
 }
+
+DestkopApp.childContextTypes = {
+  muiTheme: React.PropTypes.object.isRequired
+};

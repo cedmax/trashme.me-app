@@ -6,7 +6,12 @@ const cheerio = require('cheerio');
 const electron = require('electron');
 const Settings = require('electron-settings');
 
-var data, settings;
+var data;
+var settings = {
+  copyYoutubeUrl: false,
+  quick: true
+};
+
 var mb = menubar({
   dir: __dirname,
   preloadWindow: true,
@@ -15,13 +20,11 @@ var mb = menubar({
 });
 
 Settings.defaults({
-  appSettings: {
-    copyYoutubeUrl: false
-  }
+  appSettings: settings
 });
 
 Settings.get('appSettings').then((val) => {
-  settings = val;
+  settings = _.extend(settings, val);
 });
 
 function arrangeData(data) {

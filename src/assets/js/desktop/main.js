@@ -3,7 +3,9 @@ import MediaCard from 'js/components/mediacard';
 import AutoComplete from 'js/components/autocomplete';
 import Container from 'js/components/container';
 import Nav from 'js/components/nav';
+import filterObject from 'filter-object';
 import { getSetting } from 'js/actions';
+import Settings from 'js/components/settings';
 
 function forceCopy(){
   setTimeout(()=>{
@@ -12,6 +14,10 @@ function forceCopy(){
     const target = document.querySelector('.trashme');
     target.dispatchEvent(event);
   }, 500);
+}
+
+function filter(data, quick) {
+  return filterObject(data, (video)=>(quick)?video.quick:!video.quick);
 }
 
 export default class DestkopApp extends React.Component {
@@ -41,13 +47,15 @@ export default class DestkopApp extends React.Component {
     }
 
     return <div>
-      <Nav />
+      <Nav>
+        <Settings settingsUpdated={ this.forceUpdate.bind(this) } />
+      </Nav>
       <Container>
         <AutoComplete
           { ...this.props }
           navigateTo={this.onSelect}
           value={ currentVideo && currentVideo.title }
-          options={ this.props.data } />   
+          options={ filter(this.props.data, getSetting('quick') ) } />   
       </Container> 
       <MediaCard
         style="stretch"
@@ -55,8 +63,7 @@ export default class DestkopApp extends React.Component {
         currentVideo={ currentVideo }
       />
       {btn}
-    </div>
-    ;
+    </div>;
   }
 
   onSelect(nouse, key) {

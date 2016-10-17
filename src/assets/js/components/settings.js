@@ -17,6 +17,7 @@ export default class NavMenu extends React.Component {
     return (e, value) => {
       saveSettings(setting, value);
       this.forceUpdate();
+      this.props.settingsUpdated();
     };
   }
 
@@ -30,6 +31,11 @@ export default class NavMenu extends React.Component {
           primaryText="Copia l'url di youtube"
           secondaryText="invece di quello di TrashMeme"
           rightToggle={<Toggle toggled={getSetting('copyYoutubeUrl')} onToggle={this.saveSettings('copyYoutubeUrl')} />}
+        />
+        <ListItem
+          primaryText="Mostra solo le risposte veloci"
+          secondaryText="invece di tutti i video disponibili"
+          rightToggle={<Toggle toggled={getSetting('quick')} onToggle={this.saveSettings('quick')} />}
         />
         <Divider />
         <ListItem

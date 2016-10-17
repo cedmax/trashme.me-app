@@ -1,7 +1,6 @@
 import React from 'react';
 import AppBar from 'material-ui/lib/app-bar';
 import LeftNav from 'material-ui/lib/left-nav';
-import Settings from 'js/components/settings';
 import IconButton from 'material-ui/lib/icon-button';
 import Icon from 'material-ui/lib/svg-icons/navigation/close';
 
@@ -22,9 +21,7 @@ export default class Nav extends React.Component {
 
     let menu;
     if ( this.state.openMenu ) {
-      menu = (
-        <Settings {...this.props} />
-      );
+      menu = this.props.children;
     }
 
     return <div>

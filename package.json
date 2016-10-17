@@ -44,6 +44,7 @@
     },
     "dependencies": {
       "clipboard": "npm:clipboard@1.5.9",
+      "filter-object": "npm:filter-object@^2.1.0",
       "inline-style-prefix-all": "npm:inline-style-prefix-all@^1.0.5",
       "jsx": "github:floatdrop/plugin-jsx@1.2.1",
       "lodash": "npm:lodash@^4.16.4",

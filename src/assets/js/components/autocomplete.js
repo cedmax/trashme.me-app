@@ -63,9 +63,13 @@ export default class BorisAutoComplete extends React.Component {
       value
     } = this.props;
 
-    const placeHolder = value ?
+    let placeHolder = value ?
       value :
       `Prova con "${options[ Object.keys( options )[ 0 ]].title}"`;
+
+    if (placeHolder.length>60){
+      placeHolder = placeHolder.substr(0,60)+'...';
+    }
 
     let menuProps;
     if ( this.props.dropDownHeight ) {

@@ -3,7 +3,7 @@ import Toggle from 'material-ui/Toggle';
 import {List, ListItem} from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import ChipInput from 'material-ui-chip-input';
-import { saveSettings, quit, getSetting, saveShortcut } from 'js/actions';
+import { saveSettings, quit, getSetting, saveShortcut, saveMute } from 'js/actions';
 import { availableShortcuts } from 'js/config';
 import { Tabs, Tab } from 'material-ui/Tabs';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -16,6 +16,7 @@ export default class NavMenu extends React.Component {
     };
     this.saveSettings = this.saveSettings.bind(this);
     this.saveShortcut = this.saveShortcut.bind(this);
+    this.saveMute = this.saveMute.bind(this);
   }
 
   saveSettings(setting){   
@@ -37,6 +38,11 @@ export default class NavMenu extends React.Component {
     saveShortcut(this.state.shortcut);
   }
 
+  saveMute(e, mute){
+    this.saveSettings('mute')(e, mute);
+    saveMute(mute);
+  }
+
   render() {
     return (
       <Tabs>
@@ -51,6 +57,11 @@ export default class NavMenu extends React.Component {
               primaryText="Mostra solo le risposte veloci"
               secondaryText="invece di tutti i video disponibili"
               rightToggle={<Toggle toggled={getSetting('quick')} onToggle={this.saveSettings('quick')} />}
+            />
+             <ListItem
+              primaryText="Senza audio"
+              secondaryText="mute su tutti i video"
+              rightToggle={<Toggle toggled={getSetting('mute')} onToggle={this.saveMute} />}
             />
             <Divider />
             

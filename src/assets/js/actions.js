@@ -17,3 +17,7 @@ export function getSetting(key) {
 export function saveShortcut(shortcut) {
   window.electron.ipcRenderer.send('new-shortcut', shortcut);
 }
+
+export function saveMute(muted) {
+  window.electron.ipcRenderer.send('mute', muted);
+}

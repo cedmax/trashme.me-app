@@ -9,7 +9,7 @@
     "bundle": "jspm bundle-sfx -m js/main ./main.js",
     "package": "electron-packager . TrashMeme --platform=darwin --icon=./Icon.icns --out=./dist",
     "start": "electron src/index.js",
-    "build": "npm run prepare-assets && npm run package && appdmg ./app.json ./dist/TrashMeme.dmg && npm run clean"
+    "build": "rm -rf ./dist && npm run prepare-assets && npm run package && appdmg ./app.json ./dist/TrashMeme.dmg && npm run clean"
   },
   "author": "",
   "license": "ISC",

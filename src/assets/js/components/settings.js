@@ -65,6 +65,7 @@ export default class NavMenu extends React.Component {
           <List>
             <ListItem>
               <ChipInput
+                maxSearchResults={3}
                 style={{width:'100%'}}
                 defaultValue={this.state.shortcut} 
                 dataSource={availableShortcuts}

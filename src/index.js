@@ -10,6 +10,7 @@ var data;
 var settings = {
   copyYoutubeUrl: false,
   quick: true, 
+  mute: false,
   shortcut: ['Super', 'Alt', 'Space']
 };
 
@@ -84,4 +85,8 @@ electron.ipcMain.on('save-settings', (event, appSettings) => {
 electron.ipcMain.on('new-shortcut', (event, shortcut) => {
   electron.globalShortcut.unregisterAll();
   setShortcut(shortcut);
+});
+
+electron.ipcMain.on('mute', (event, muted) => {
+  electron.webContents.getFocusedWebContents().setAudioMuted(muted);
 });

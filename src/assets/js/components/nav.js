@@ -2,58 +2,56 @@ import React from 'react';
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import IconButton from 'material-ui/IconButton';
-import Icon from 'material-ui/svg-icons/navigation/close';
+import SettingsIcon from 'material-ui/svg-icons/action/settings';
+import Icon from 'material-ui/svg-icons/action/view-list';
+import CloseIcon from 'material-ui/svg-icons/navigation/close';
 
 export default class Nav extends React.Component {
-  constructor( props ) {
-    super( props );
-    this.state = {
-      openMenu: false
-    };
-    this.handleToggleMenu = this.handleToggleMenu.bind( this );
-  }
-
-  handleToggleMenu () {
-    this.setState({ openMenu: !this.state.openMenu });
-  }
-
   render() {
 
-    let menu;
-    if ( this.state.openMenu ) {
-      menu = this.props.children;
+    let drawerContent;
+    if ( this.props.open ) {
+      drawerContent = this.props[this.props.open];
     }
 
     return <div>
       <AppBar
-        onLeftIconButtonTouchTap={this.handleToggleMenu}
-        title="TrashMeme"
-      />
-      <Drawer
-        width={ document.body.clientWidth }
-        docked={ false }
-        onRequestChange={ openMenu => this.setState({ openMenu }) }
-        open={ this.state.openMenu }
-        containerStyle={{top:'10px'}}
-      >
-      <AppBar
         iconElementLeft={
           <IconButton
-            onClick={this.handleToggleMenu}
+            onClick={this.props.toggleOpen('list')}
           >
             <Icon />
           </IconButton>
         }
+        iconElementRight={
+          <IconButton
+            onClick={this.props.toggleOpen('settings')}
+          >
+            <SettingsIcon />
+          </IconButton>
+        }
         title="TrashMeme"
       />
-      { menu }
+      <Drawer
+        width={ document.body.clientWidth - 100 }
+        docked={ false }
+        onRequestChange={ this.props.toggleOpen() }
+        open={ !!this.props.open }
+        containerStyle={{top:'10px'}}
+      >
+        <AppBar
+          showMenuIconButton={false}
+          iconElementRight={
+            <IconButton
+              onClick={this.props.toggleOpen()}
+            >
+              <CloseIcon />
+            </IconButton>
+          }
+          title="TrashMeme"
+        />
+        { drawerContent }
       </Drawer>
     </div>;
   } 
 }
-
-
-
-    
-
-    

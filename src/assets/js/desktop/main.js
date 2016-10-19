@@ -6,6 +6,7 @@ import Nav from 'js/components/nav';
 import filterObject from 'filter-object';
 import { getSetting } from 'js/actions';
 import Settings from 'js/components/settings';
+import List from 'js/components/list';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 
@@ -19,7 +20,13 @@ function forceCopy(){
 }
 
 function filter(data, quick) {
-  return filterObject(data, (video)=>(quick)?video.quick:!video.quick);
+  return filterObject(data, (video)=>{
+    if (quick) {
+      return video.quick || video.category==='hidden';
+    } else {
+      return video;
+    }
+  });
 }
 
 export default class DestkopApp extends React.Component {
@@ -28,19 +35,26 @@ export default class DestkopApp extends React.Component {
 
     this.state = {
       key: '',
-      selected: {}
+      selected: {},
+      open: false
     };
     this.onSelect = this.onSelect.bind(this);
+    this.closePanel = this.toggleOpen();
   }
 
   getChildContext() {
-    return {muiTheme: getMuiTheme(baseTheme)};
+    return { muiTheme: getMuiTheme(baseTheme) };
   }
-
+  
+  toggleOpen(section) {
+    return () => {
+      this.setState({ open: section || false  });
+    };
+  }
 
   render() {
     const currentVideo = this.state.key ? this.state.selected : null;
-
+    const data = filter(this.props.data, getSetting('quick') );
     let btn;
     if (currentVideo) {
       const urlToCopy = getSetting('copyYoutubeUrl')?currentVideo.url:`https://trashme.me/${currentVideo.category}/${this.state.key}`;
@@ -54,15 +68,25 @@ export default class DestkopApp extends React.Component {
     }
 
     return <div>
-      <Nav>
-        <Settings settingsUpdated={ this.forceUpdate.bind(this) } />
-      </Nav>
+      <Nav
+        open={this.state.open}
+        toggleOpen={this.toggleOpen.bind(this)}
+        list={
+          <List data={ data } navigateTo={function() {
+            this.onSelect.apply(this, arguments);
+            this.closePanel();
+          }.bind(this)} />
+        }
+        settings={
+          <Settings settingsUpdated={ this.forceUpdate.bind(this) } />
+        } 
+      />
       <Container>
         <AutoComplete
           { ...this.props }
           navigateTo={this.onSelect}
           value={ currentVideo && currentVideo.title }
-          options={ filter(this.props.data, getSetting('quick') ) } />   
+          options={ data } />   
       </Container> 
       <MediaCard
         style="stretch"

@@ -39,9 +39,9 @@ Settings.get('appSettings').then((val) => {
 });
 
 function arrangeData(data) {
-  const hidden = _.mapValues(data.r.videos, (video)=>_.extend(video, {category: 'hidden'}));
+  const hidden = _.mapValues(data.r.videos, (video)=>_.extend(video, {category: 'hidden', title: video.title.replace(/(\(.*\))/, '')}));
   const categories = _.transform(_.mapValues(data.categories, 'videos'), (result, value, key)=>{
-    value = _.mapValues(value, (video)=>_.extend(video, {category:key}));
+    value = _.mapValues(value, (video)=>_.extend(video, { category:key }));
     _.extend(result, value);
   });
 

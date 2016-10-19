@@ -69,7 +69,7 @@ export default class BorisAutoComplete extends React.Component {
         style={ style.autocomplete.container }
       >
         <AutoComplete
-          dataSource={ Object.keys( options ).map( item => options[ item ].title ).sort() }
+          dataSource={ Object.keys( options ).map( item => options[ item ].title ) }
           menuProps={ menuProps }
           openOnFocus={ false }
           hintText={ placeHolder }

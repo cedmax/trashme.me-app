@@ -8,24 +8,29 @@ import CloseIcon from 'material-ui/svg-icons/navigation/close';
 
 export default class Nav extends React.Component {
   render() {
+    const {
+      open,
+      toggleOpen
+    } = this.props;
+
 
     let drawerContent;
-    if ( this.props.open ) {
-      drawerContent = this.props[this.props.open];
+    if ( open ) {
+      drawerContent = this.props[open];
     }
 
     return <div>
       <AppBar
         iconElementLeft={
           <IconButton
-            onClick={this.props.toggleOpen('list')}
+            onClick={ toggleOpen('list') }
           >
             <Icon />
           </IconButton>
         }
         iconElementRight={
           <IconButton
-            onClick={this.props.toggleOpen('settings')}
+            onClick={ toggleOpen('settings') }
           >
             <SettingsIcon />
           </IconButton>
@@ -35,15 +40,15 @@ export default class Nav extends React.Component {
       <Drawer
         width={ document.body.clientWidth - 100 }
         docked={ false }
-        onRequestChange={ this.props.toggleOpen() }
-        open={ !!this.props.open }
+        onRequestChange={ toggleOpen() }
+        open={ !!open }
         containerStyle={{top:'10px'}}
       >
         <AppBar
-          showMenuIconButton={false}
+          showMenuIconButton={ false }
           iconElementRight={
             <IconButton
-              onClick={this.props.toggleOpen()}
+              onClick={ toggleOpen() }
             >
               <CloseIcon />
             </IconButton>

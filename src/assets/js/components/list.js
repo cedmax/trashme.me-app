@@ -11,7 +11,7 @@ export default class Link extends React.Component {
 
     return <List style={{height:'calc(100% - 100px)', overflow:'auto'}}>
       { 
-        keys.map((key, i) => (
+        keys.map((key) => (
           <ListItem key={key} onClick={() => navigateTo(null, key)}>
             <div>{data[key].title}</div>
           </ListItem>

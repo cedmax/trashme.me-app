@@ -10,7 +10,9 @@
     "bundle": "jspm bundle-sfx -m js/main ./main.js",
     "package": "electron-packager . TrashMeme --platform=darwin --icon=./Icon.icns --out=./dist",
     "start": "electron src/index.js",
-    "build": "rm -rf ./dist && npm run prepare-assets && npm run package && appdmg ./app.json ./dist/TrashMeme.dmg && npm run clean"
+    "build": "rm -rf ./dist && npm run prepare-assets && npm run package && appdmg ./app.json ./dist/TrashMeme.dmg && npm run clean",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "author": "",
   "license": "ISC",
@@ -28,7 +30,8 @@
     "react": "0.14.7",
     "react-dom": "0.14.7",
     "request": "^2.75.0",
-    "usemin-cli": "^0.1.0"
+    "usemin-cli": "^0.1.0",
+    "snyk": "^1.31.0"
   },
   "devDependencies": {
     "appdmg": "^0.4.5",
@@ -60,5 +63,6 @@
       "babel-runtime": "npm:babel-runtime@5.8.24",
       "core-js": "npm:core-js@1.1.4"
     }
-  }
+  },
+  "snyk": true
 }
